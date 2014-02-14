@@ -74,8 +74,7 @@ public class BookTest {
         String title = "";
         Book instance = new Book();
         instance.setTitle(title);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+         
     }
 
     /**
@@ -101,8 +100,7 @@ public class BookTest {
         String authorName = "";
         Book instance = new Book();
         instance.setAuthorName(authorName);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+         
     }
 
     /**
@@ -112,11 +110,11 @@ public class BookTest {
     public void testGetAuthorSurname() {
         System.out.println("getAuthorSurname");
         Book instance = new Book();
-        String expResult = "";
+        String expResult = "AuthorSurname";
+        instance.setAuthorSurname(expResult);
         String result = instance.getAuthorSurname();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+         
     }
 
     /**
@@ -128,8 +126,7 @@ public class BookTest {
         String authorSurname = "";
         Book instance = new Book();
         instance.setAuthorSurname(authorSurname);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+         
     }
 
     /**
@@ -142,8 +139,7 @@ public class BookTest {
         int expResult = 0;
         int result = instance.getISBN();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+         
     }
 
     /**
@@ -155,8 +151,7 @@ public class BookTest {
         int ISBN = 0;
         Book instance = new Book();
         instance.setISBN(ISBN);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+         
     }
 
     /**
@@ -165,13 +160,14 @@ public class BookTest {
     @Test
     public void testCompareTo() {
         System.out.println("compareTo");
-        Book t = null;
+        Book t = new Book();
+        t.setTitle("hello");
         Book instance = new Book();
+        instance.setTitle("heLLo");
         int expResult = 0;
         int result = instance.compareTo(t);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+         
     }
 
     /**
@@ -181,11 +177,15 @@ public class BookTest {
     public void testToString() {
         System.out.println("toString");
         Book instance = new Book();
-        String expResult = "";
+        instance.setTitle("a");
+        instance.setISBN(1);
+        instance.setAuthorName("b");
+        instance.setAuthorSurname("c");
+         
+        String expResult = "a(1) by b c";
         String result = instance.toString();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+         
     }
 
     /**
@@ -199,8 +199,9 @@ public class BookTest {
         boolean expResult = false;
         boolean result = instance.equals(o);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
+        
+        
     }
     
 }

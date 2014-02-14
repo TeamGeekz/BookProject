@@ -97,7 +97,7 @@ public class Book implements Comparable<Book>{
 
     @Override
     public String toString() {
-       return this.getTitle() +"("+getISBN()+")"+ "by " + this.getAuthorName()+" "+this.getAuthorName();
+       return this.getTitle() +"("+getISBN()+")"+ " by " + this.getAuthorName()+" "+this.getAuthorSurname();
     }
 
     @Override
