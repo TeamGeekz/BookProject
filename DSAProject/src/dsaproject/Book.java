@@ -1,14 +1,37 @@
-
 package dsaproject;
 
+public class Book implements Comparable<Book> {
 
-public class Book implements Comparable<Book>{
-    public final static int TITLE_LENGTH =25;
-    
+    public final static int TITLE_LENGTH = 25;
+
     private String title;
-    private String authorName ;
+    private String authorName;
     private String authorSurname;
     private int ISBN;
+
+    /**
+     *
+     * Default
+     *
+     */
+    public Book() {
+    }
+
+    /**
+     *
+     * Create a Book Instance
+     *
+     * @param title
+     * @param authorName
+     * @param authorSurname
+     * @param ISBN
+     */
+    public Book(String title, String authorName, String authorSurname, int ISBN) {
+        this.title = title;
+        this.authorName = authorName;
+        this.authorSurname = authorSurname;
+        this.ISBN = ISBN;
+    }
 
     /**
      * @return the title
@@ -21,8 +44,8 @@ public class Book implements Comparable<Book>{
      * @param title the title to set
      */
     public void setTitle(String title) {
-        if (title.length()>Book.TITLE_LENGTH) {
-            title =title.substring(0,Book.TITLE_LENGTH);
+        if (title.length() > Book.TITLE_LENGTH) {
+            title = title.substring(0, Book.TITLE_LENGTH);
         }
         this.title = title;
     }
@@ -76,7 +99,7 @@ public class Book implements Comparable<Book>{
 
     @Override
     public String toString() {
-       return this.getTitle() +"("+getISBN()+")"+ " by " + this.getAuthorName()+" "+this.getAuthorSurname();
+        return this.getTitle() + "(" + getISBN() + ")" + " by " + this.getAuthorName() + " " + this.getAuthorSurname();
     }
 
     @Override
@@ -84,10 +107,9 @@ public class Book implements Comparable<Book>{
         if (o instanceof Book) {
             Book book = (Book) o;
             return this.getTitle().equalsIgnoreCase(book.getTitle()) && this.getISBN() == book.getISBN();
-        }else{
+        } else {
             return false;
         }
     }
 
-    
 }
