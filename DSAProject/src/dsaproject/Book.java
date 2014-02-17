@@ -106,7 +106,7 @@ public class Book implements Comparable<Book> {
     public boolean equals(Object o) {
         if (o instanceof Book) {
             Book book = (Book) o;
-            return this.getTitle().equalsIgnoreCase(book.getTitle()) && this.getISBN() == book.getISBN();
+            return this.getTitle().equalsIgnoreCase(book.getTitle()) ;
         } else {
             return false;
         }
