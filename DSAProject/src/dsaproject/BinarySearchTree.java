@@ -1,5 +1,6 @@
 package dsaproject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class BinarySearchTree {
@@ -107,7 +108,10 @@ public class BinarySearchTree {
    public Book getBookByISBN(int ISBN){
         inOrderBookMap(this.root);
         Book get = bookMap.get(ISBN);
-        return find(get);
+        if(get!=null){
+         return find(get);
+        }
+        return get;
     }
 //    ******************* Deletion *******************  ///
 // Fields required as stable in delete(BSTnode, int)
@@ -188,7 +192,23 @@ public class BinarySearchTree {
 
         return current == null ? null : current.data;
     }
-    
+    ArrayList<Book>  bookarray =new ArrayList<>();
+     public void inOrderBookList(Node item,String value) {
+         
+        if (item == null) {
+            return ;            // I.e., empty tree
+        }
+        inOrderBookList(item.left,value);                   // Process left sub-tree
+         if (item.data.getTitle().contains(value)) {
+             bookarray.add(item.data);
+         }
+        
+        inOrderBookList(item.right,value);                  // Process right sub-tree
+    }
+    public ArrayList getBookList(String value) {
+        inOrderBookList(root, value);
+        return bookarray;
+    }
 // Return the size based on the children; node must NOT be null.
     private static int newSize(Node node) {
         Node lt = node.left,

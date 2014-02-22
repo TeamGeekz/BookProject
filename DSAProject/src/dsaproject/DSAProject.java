@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
@@ -18,27 +19,25 @@ import java.util.Scanner;
  */
 public class DSAProject {
 
-static BinarySearchTree bst;
+    static BinarySearchTree bst;
 
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        try{
+        try {
             File file = new File("BookList.txt");
-            if(file.exists()){
+            if (file.exists()) {
+            } else {
+                PrintWriter writer = new PrintWriter("BookList.txt", "UTF-8"); // Create a File Name Called BookList.txt
             }
-            else{
-            PrintWriter writer = new PrintWriter("BookList.txt", "UTF-8"); // Create a File Name Called BookList.txt
-            }
-        }
-        catch(IOException e){
+        } catch (IOException e) {
             System.out.println("File Not Found");
         }
         bst = new BinarySearchTree();
         populateTree();
         do {
-           printMenu();
+            printMenu();
         } while (true);
 
     }
@@ -57,10 +56,10 @@ static BinarySearchTree bst;
         System.out.print("User Input :");
         int input = 0;
         try {
-            
+
             Scanner sc = new Scanner(System.in); // Change 
             input = sc.nextInt();               // Change
-            
+
             //input = Integer.parseInt(System.console().readLine());
         } catch (NumberFormatException e) {
             printMenu();
@@ -106,8 +105,9 @@ static BinarySearchTree bst;
     }
 
     static void printBookList() {
+        printHeadder();
         bst.inOrder(bst.root);
-        
+        System.out.println("\n");
     }
 
     static void populateTree() {
@@ -119,35 +119,33 @@ static BinarySearchTree bst;
 //        bst.insert(book2);
 //        bst.insert(book1);
 //       
-        
-        try(BufferedReader  reader = new BufferedReader(new InputStreamReader(new FileInputStream("BookList.txt")))) {
-        String line = null; 
-        while( (line =reader.readLine()) != null){
-             String [] array = line.split(","); // you split the array with Comma
-              bst.insert(new Book(array[0],array[1],array[2],Integer.parseInt(array[3]))); // you add to the list ,you have to create a constructor string string String or cast for proper type.               
-        }           
 
-    } catch (IOException ex) {
-        printMenu();
-    } 
-    
-    catch(Exception e){
-        
-        printMenu();
-     }
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream("BookList.txt")))) {
+            String line = null;
+            while ((line = reader.readLine()) != null) {
+                String[] array = line.split(","); // you split the array with Comma
+                bst.insert(new Book(array[0], array[1], array[2], Integer.parseInt(array[3]))); // you add to the list ,you have to create a constructor string string String or cast for proper type.               
+            }
+
+        } catch (IOException ex) {
+            printMenu();
+        } catch (Exception e) {
+
+            printMenu();
+        }
 
     }
 
     static void enterNewBook(String bookName) {
         if (bookName == null) {
-            System.out.printf("%s %5s", "Enter Book Name",":");
-            
+            System.out.printf("%s %5s", "Enter Book Name", ":");
+
             Scanner sc = new Scanner(System.in); // Change 
             bookName = sc.nextLine(); //change
             //bookName = System.console().readLine();
         }
 
-        System.out.printf("%s %5s", "Enter ISBN",":");
+        System.out.printf("%s %5s", "Enter ISBN", ":");
         int ISBN = 0;
         try {
             Scanner sc = new Scanner(System.in); // Change 
@@ -157,45 +155,44 @@ static BinarySearchTree bst;
             enterNewBook(bookName);
         }
 
-        System.out.printf("%s %5s", "Enter Aouther First Name",":");
+        System.out.printf("%s %5s", "Enter Aouther First Name", ":");
         Scanner sc = new Scanner(System.in); // Change 
         String fName = sc.nextLine(); //change
         //String fName = System.console().readLine();
-        System.out.printf("%s %5s", "Enter Aouther Last Name",":");
+        System.out.printf("%s %5s", "Enter Aouther Last Name", ":");
         sc = new Scanner(System.in); // Change 
         String lName = sc.nextLine(); //change
         //String lName = System.console().readLine();
-        
-        try(BufferedWriter  writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("BookList.txt",true)))) {
-        String line = null; 
-        writer.append(bookName + "," + fName + "," + lName + "," + ISBN + ",");
-        writer.newLine();
-        writer.flush();
 
-    } catch (IOException ex) {
+        try (BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("BookList.txt", true)))) {
+            String line = null;
+            writer.append(bookName + "," + fName + "," + lName + "," + ISBN + ",");
+            writer.newLine();
+            writer.flush();
+
+        } catch (IOException ex) {
             System.out.println("File Not Found");
             printMenu();
-    } 
-    
-    catch(Exception e){
-        
-        printMenu();
-     }
-        
+        } catch (Exception e) {
+
+            printMenu();
+        }
+
         Book newBook = new Book(bookName, fName, lName, ISBN);
         bst.insert(newBook);
         System.out.println(" Book " + bookName + "  Added to file");
     }
 
     static Book searchBookByTitel() {
-        System.out.printf("%s %5s", "Enter Book Name",":");
+        System.out.printf("%s %5s", "Enter Book Name", ":");
         Scanner sc = new Scanner(System.in); // Change 
-        String  bookName = sc.nextLine(); //change
+        String bookName = sc.nextLine(); //change
         //String bookName = System.console().readLine();
         Book findBook = new Book();
         findBook.setTitle(bookName);
         Book found = bst.find(findBook);
         if (found != null) {
+            printHeadder();
             System.out.println(found);
         } else {
             System.out.println("No Book found !");
@@ -204,17 +201,18 @@ static BinarySearchTree bst;
     }
 
     static Book searchBookByISBN() {
-        System.out.printf("%s %5s", "Enter ISBN",":");
+        System.out.printf("%s %5s", "Enter ISBN", ":");
         int ISBN = 0;
         try {
             //ISBN = Integer.parseInt(System.console().readLine());
             Scanner sc = new Scanner(System.in); // Change 
-            ISBN = sc.nextInt(); //change
+            ISBN = Integer.parseInt(sc.nextLine()); //change
         } catch (NumberFormatException e) {
             searchBookByISBN();
         }
         Book found = bst.getBookByISBN(ISBN);
         if (found != null) {
+            printHeadder();
             System.out.println(found);
         } else {
             System.out.println("No Book found !");
@@ -242,10 +240,29 @@ static BinarySearchTree bst;
     }
 
     static void ShowBooksByKeyword() {
-        System.out.printf("%s %5s", "Enter Seach Keyword",":");
+        System.out.printf("%s %5s", "Enter Seach Keyword", ":");
         String keyword = System.console().readLine();
+        ArrayList<Book> ar = bst.getBookList(keyword);
+        if (ar.size() > 0) {
+            System.out.println(ar.size()+" matchs found");
+            printHeadder();
+            for (Book book : ar) {
+                System.out.println(book);
+            }
+            System.out.println("\n");
+        } else {
+            System.out.println("No matchs found !");
+        }
+
         // need to implements 
         //print list of books
+    }
+
+    static void printHeadder() {
+        String formated = String.format("%-50s %-10s     %s", new String(new char[50]).replace("\0", "="), new String(new char[10]).replace("\0", "="), new String(new char[20]).replace("\0", "="));
+        System.out.println(formated);
+        System.out.println(String.format("%-50s %-10s     %s", "   Title   ", "  ISBN  ", "  Author  "));
+        System.out.println(formated);
     }
 
 }
