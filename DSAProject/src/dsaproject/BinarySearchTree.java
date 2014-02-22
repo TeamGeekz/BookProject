@@ -2,6 +2,7 @@ package dsaproject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.TreeSet;
 
 public class BinarySearchTree {
 
@@ -192,7 +193,7 @@ public class BinarySearchTree {
 
         return current == null ? null : current.data;
     }
-    ArrayList<Book>  bookarray =new ArrayList<>();
+    TreeSet<Book>  bookarray =new TreeSet<>();
      public void inOrderBookList(Node item,String value) {
          
         if (item == null) {
@@ -205,7 +206,8 @@ public class BinarySearchTree {
         
         inOrderBookList(item.right,value);                  // Process right sub-tree
     }
-    public ArrayList getBookList(String value) {
+    public TreeSet getBookList(String value) {
+        bookarray.clear();
         inOrderBookList(root, value);
         return bookarray;
     }

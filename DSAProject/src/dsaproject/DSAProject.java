@@ -12,6 +12,7 @@ import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.TreeSet;
 
 /**
  *
@@ -242,7 +243,7 @@ public class DSAProject {
     static void ShowBooksByKeyword() {
         System.out.printf("%s %5s", "Enter Seach Keyword", ":");
         String keyword = System.console().readLine();
-        ArrayList<Book> ar = bst.getBookList(keyword);
+        TreeSet<Book> ar = bst.getBookList(keyword);
         if (ar.size() > 0) {
             System.out.println(ar.size()+" matchs found");
             printHeadder();
