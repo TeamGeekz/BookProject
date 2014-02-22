@@ -44,9 +44,7 @@ public class Book implements Comparable<Book> {
      * @param title the title to set
      */
     public void setTitle(String title) {
-        if (title.length() > Book.TITLE_LENGTH) {
-            title = title.substring(0, Book.TITLE_LENGTH);
-        }
+        
         this.title = title;
     }
 
