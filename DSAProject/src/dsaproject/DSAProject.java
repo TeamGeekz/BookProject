@@ -1,13 +1,40 @@
 package dsaproject;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
+import java.util.Scanner;
+
+/**
+ *
+ * @author Isuru
+ */
 public class DSAProject {
 
-    static BinarySearchTree bst;
+static BinarySearchTree bst;
 
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+        try{
+            File file = new File("BookList.txt");
+            if(file.exists()){
+            }
+            else{
+            PrintWriter writer = new PrintWriter("BookList.txt", "UTF-8"); // Create a File Name Called BookList.txt
+            }
+        }
+        catch(IOException e){
+            System.out.println("File Not Found");
+        }
         bst = new BinarySearchTree();
         populateTree();
         do {
@@ -30,7 +57,11 @@ public class DSAProject {
         System.out.print("User Input :");
         int input = 0;
         try {
-            input = Integer.parseInt(System.console().readLine());
+            
+            Scanner sc = new Scanner(System.in); // Change 
+            input = sc.nextInt();               // Change
+            
+            //input = Integer.parseInt(System.console().readLine());
         } catch (NumberFormatException e) {
             printMenu();
         }
@@ -76,52 +107,91 @@ public class DSAProject {
 
     static void printBookList() {
         bst.inOrder(bst.root);
+        
     }
 
     static void populateTree() {
         //Read books from file 
-        Book book1 = new Book("aaa", "xys", "ss", 1);
-        Book book2 = new Book("abc", "xys", "ss", 2);
-        Book book3 = new Book("bbc", "xys", "ss", 3);
-        Book book4 = new Book("eee", "xys", "ss", 4);
-        Book book5 = new Book("xya", "xys", "ss", 5);
-        Book book6 = new Book("zzz", "xys", "ss", 6);
+//        Book book1 = new Book("aaa", "xys", "ss", 1);
+//        Book book2 = new Book("abc", "xys", "ss", 2);
+//        
+//
+//        bst.insert(book2);
+//        bst.insert(book1);
+//       
+        
+        try(BufferedReader  reader = new BufferedReader(new InputStreamReader(new FileInputStream("BookList.txt")))) {
+        String line = null; 
+        while( (line =reader.readLine()) != null){
+             String [] array = line.split(","); // you split the array with Comma
+              bst.insert(new Book(array[0],array[1],array[2],Integer.parseInt(array[3]))); // you add to the list ,you have to create a constructor string string String or cast for proper type.               
+        }           
 
-        bst.insert(book2);
-        bst.insert(book1);
-        bst.insert(book4);
-        bst.insert(book3);
-        bst.insert(book6);
-        bst.insert(book5);
+    } catch (IOException ex) {
+        printMenu();
+    } 
+    
+    catch(Exception e){
+        
+        printMenu();
+     }
 
     }
 
     static void enterNewBook(String bookName) {
         if (bookName == null) {
             System.out.printf("%s %5s", "Enter Book Name",":");
-            bookName = System.console().readLine();
+            
+            Scanner sc = new Scanner(System.in); // Change 
+            bookName = sc.nextLine(); //change
+            //bookName = System.console().readLine();
         }
 
         System.out.printf("%s %5s", "Enter ISBN",":");
         int ISBN = 0;
         try {
-            ISBN = Integer.parseInt(System.console().readLine());
+            Scanner sc = new Scanner(System.in); // Change 
+            ISBN = sc.nextInt(); //change
+            //ISBN = Integer.parseInt(System.console().readLine());
         } catch (NumberFormatException e) {
             enterNewBook(bookName);
         }
 
         System.out.printf("%s %5s", "Enter Aouther First Name",":");
-        String fName = System.console().readLine();
-        System.out.printf("%s %5s", "Enter Aouther First Name",":");
-        String lName = System.console().readLine();
+        Scanner sc = new Scanner(System.in); // Change 
+        String fName = sc.nextLine(); //change
+        //String fName = System.console().readLine();
+        System.out.printf("%s %5s", "Enter Aouther Last Name",":");
+        sc = new Scanner(System.in); // Change 
+        String lName = sc.nextLine(); //change
+        //String lName = System.console().readLine();
+        
+        try(BufferedWriter  writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("BookList.txt",true)))) {
+        String line = null; 
+        writer.append(bookName + "," + fName + "," + lName + "," + ISBN + ",");
+        writer.newLine();
+        writer.flush();
+
+    } catch (IOException ex) {
+            System.out.println("File Not Found");
+            printMenu();
+    } 
+    
+    catch(Exception e){
+        
+        printMenu();
+     }
+        
         Book newBook = new Book(bookName, fName, lName, ISBN);
         bst.insert(newBook);
-        System.out.println(" Book " + bookName + "Added ");
+        System.out.println(" Book " + bookName + "  Added to file");
     }
 
     static Book searchBookByTitel() {
         System.out.printf("%s %5s", "Enter Book Name",":");
-        String bookName = System.console().readLine();
+        Scanner sc = new Scanner(System.in); // Change 
+        String  bookName = sc.nextLine(); //change
+        //String bookName = System.console().readLine();
         Book findBook = new Book();
         findBook.setTitle(bookName);
         Book found = bst.find(findBook);
@@ -137,7 +207,9 @@ public class DSAProject {
         System.out.printf("%s %5s", "Enter ISBN",":");
         int ISBN = 0;
         try {
-            ISBN = Integer.parseInt(System.console().readLine());
+            //ISBN = Integer.parseInt(System.console().readLine());
+            Scanner sc = new Scanner(System.in); // Change 
+            ISBN = sc.nextInt(); //change
         } catch (NumberFormatException e) {
             searchBookByISBN();
         }
@@ -170,9 +242,10 @@ public class DSAProject {
     }
 
     static void ShowBooksByKeyword() {
-        System.out.printf("%s %5s\n", "Enter Seach Keyword",":");
+        System.out.printf("%s %5s", "Enter Seach Keyword",":");
         String keyword = System.console().readLine();
         // need to implements 
         //print list of books
     }
+
 }
