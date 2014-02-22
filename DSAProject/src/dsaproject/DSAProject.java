@@ -5,12 +5,10 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.TreeSet;
 
@@ -165,23 +163,12 @@ public class DSAProject {
         String lName = sc.nextLine(); //change
         //String lName = System.console().readLine();
 
-        try (BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("BookList.txt", true)))) {
-            String line = null;
-            writer.append(bookName + "," + fName + "," + lName + "," + ISBN + ",");
-            writer.newLine();
-            writer.flush();
-
-        } catch (IOException ex) {
-            System.out.println("File Not Found");
-            printMenu();
-        } catch (Exception e) {
-
-            printMenu();
-        }
-
+ 
         Book newBook = new Book(bookName, fName, lName, ISBN);
         bst.insert(newBook);
+         
         System.out.println(" Book " + bookName + "  Added to file");
+        writeBooKToFile(newBook);
     }
 
     static Book searchBookByTitel() {
@@ -264,6 +251,26 @@ public class DSAProject {
         System.out.println(formated);
         System.out.println(String.format("%-50s %-10s     %s", "   Title   ", "  ISBN  ", "  Author  "));
         System.out.println(formated);
+    }
+
+    private static void writeBooKToFile(Book newBook) {
+        try (BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("BookList.txt", true)))) {
+            String line = null;
+            writer.append(newBook.getTitle() 
+                    + "," +newBook.getAuthorName() 
+                    + "," + newBook.getAuthorSurname()
+                    + "," + newBook.getISBN() + ",");
+            writer.newLine();
+            writer.flush();
+
+        } catch (IOException ex) {
+            System.out.println("File Not Found");
+            printMenu();
+        } catch (Exception e) {
+
+            printMenu();
+        }
+
     }
 
 }
