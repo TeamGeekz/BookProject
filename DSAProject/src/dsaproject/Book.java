@@ -44,7 +44,7 @@ public class Book implements Comparable<Book> {
      * @param title the title to set
      */
     public void setTitle(String title) {
-        
+
         this.title = title;
     }
 
@@ -97,7 +97,7 @@ public class Book implements Comparable<Book> {
 
     @Override
     public String toString() {
-        String formated = String.format("%-50s %-10d     %s %s", this.getTitle() ,this.getISBN(),this.getAuthorName(),this.getAuthorSurname());
+        String formated = String.format("%-50s %-10d     %s %s", this.getTitle(), this.getISBN(), this.getAuthorName(), this.getAuthorSurname());
         return formated;
     }
 
@@ -105,7 +105,7 @@ public class Book implements Comparable<Book> {
     public boolean equals(Object o) {
         if (o instanceof Book) {
             Book book = (Book) o;
-            return this.getTitle().equalsIgnoreCase(book.getTitle()) ;
+            return this.getTitle().equalsIgnoreCase(book.getTitle());
         } else {
             return false;
         }

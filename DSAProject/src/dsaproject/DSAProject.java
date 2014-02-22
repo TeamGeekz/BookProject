@@ -163,10 +163,9 @@ public class DSAProject {
         String lName = sc.nextLine(); //change
         //String lName = System.console().readLine();
 
- 
         Book newBook = new Book(bookName, fName, lName, ISBN);
         bst.insert(newBook);
-         
+
         System.out.println(" Book " + bookName + "  Added to file");
         writeBooKToFile(newBook);
     }
@@ -232,7 +231,7 @@ public class DSAProject {
         String keyword = System.console().readLine();
         TreeSet<Book> ar = bst.getBookList(keyword);
         if (ar.size() > 0) {
-            System.out.println(ar.size()+" matchs found");
+            System.out.println(ar.size() + " matchs found");
             printHeadder();
             for (Book book : ar) {
                 System.out.println(book);
@@ -256,8 +255,8 @@ public class DSAProject {
     private static void writeBooKToFile(Book newBook) {
         try (BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("BookList.txt", true)))) {
             String line = null;
-            writer.append(newBook.getTitle() 
-                    + "," +newBook.getAuthorName() 
+            writer.append(newBook.getTitle()
+                    + "," + newBook.getAuthorName()
                     + "," + newBook.getAuthorSurname()
                     + "," + newBook.getISBN() + ",");
             writer.newLine();

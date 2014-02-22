@@ -11,7 +11,7 @@ public class BinarySearchTree {
     protected static final boolean DEBUG = false;
     protected static final boolean UNIQUE = false;
     protected HashMap<Integer, Book> bookMap = new HashMap<>();
-    protected TreeSet<Book>  bookarray =new TreeSet<>();
+    protected TreeSet<Book> bookarray = new TreeSet<>();
 
     /*
      * Insertion in the BST
@@ -22,7 +22,7 @@ public class BinarySearchTree {
     }
 
 // Recursive insertion, returning reference to subtree generated.
-   private Node insert(Node node, Book value) {
+    private Node insert(Node node, Book value) {
         if (node == null) {
             node = build(value);
         } else if (value.compareTo(node.data) < 0) {
@@ -43,7 +43,7 @@ public class BinarySearchTree {
         node.size = newSize(node);
         return node;
     } // end insert(BSTnode, Comparable)
-    
+
     // To get ascending order, do an in-order traversal of the tree
     public void inOrder(Node item) {
         if (item == null) {
@@ -51,14 +51,13 @@ public class BinarySearchTree {
         }
         inOrder(item.left);                   // Process left sub-tree
         System.out.printf("%25s (%d)\n", item.data, item.height);
-        
+
         inOrder(item.right);                  // Process right sub-tree
     }
-    
+
 //  ************** free-space list mainenance ******************  //
 // Generate a node, either re-using from the free list or constructed
-
-   private Node build(Book data) {
+    private Node build(Book data) {
         Node rtn;
 
         if (free == null) {
@@ -80,7 +79,7 @@ public class BinarySearchTree {
     }
 
 // push node onto free list.
-   private void recycle(Node node) {
+    private void recycle(Node node) {
         if (DEBUG) {
             System.out.println("Recycling node \"" + node.data + '"');
         }
@@ -88,6 +87,7 @@ public class BinarySearchTree {
         node.right = free;
         free = node;
     } // end recycle
+
     private static int newHight(Node node) {
         Node lt = node.left,
                 rt = node.right;
@@ -106,11 +106,11 @@ public class BinarySearchTree {
         }
     } // end newHt()
 
-   public Book getBookByISBN(int ISBN){
+    public Book getBookByISBN(int ISBN) {
         inOrderBookMap(this.root);
         Book get = bookMap.get(ISBN);
-        if(get!=null){
-         return find(get);
+        if (get != null) {
+            return find(get);
         }
         return get;
     }
@@ -168,12 +168,13 @@ public class BinarySearchTree {
         }
         return node;
     }
+
     public void inOrderBookMap(Node item) {
         if (item == null) {
             return;            // I.e., empty tree
         }
         inOrderBookMap(item.left);                   // Process left sub-tree
-        bookMap.put(item.data.getISBN(),item.data);        
+        bookMap.put(item.data.getISBN(), item.data);
         inOrderBookMap(item.right);                  // Process right sub-tree
     }
     ////******************* Simple Find *******************////
@@ -192,25 +193,27 @@ public class BinarySearchTree {
 
         return current == null ? null : current.data;
     }
-    
-     public void inOrderBookList(Node item,String value) {
-         
+
+    public void inOrderBookList(Node item, String value) {
+
         if (item == null) {
-            return ;            // I.e., empty tree
+            return;            // I.e., empty tree
         }
-        inOrderBookList(item.left,value);                   // Process left sub-tree
-         if (item.data.getTitle().contains(value)) {
-             bookarray.add(item.data);
-         }
-        
-        inOrderBookList(item.right,value);                  // Process right sub-tree
+        inOrderBookList(item.left, value);                   // Process left sub-tree
+        if (item.data.getTitle().contains(value)) {
+            bookarray.add(item.data);
+        }
+
+        inOrderBookList(item.right, value);                  // Process right sub-tree
     }
+
     public TreeSet getBookList(String value) {
         bookarray.clear();
         inOrderBookList(root, value);
         return bookarray;
     }
 // Return the size based on the children; node must NOT be null.
+
     private static int newSize(Node node) {
         Node lt = node.left,
                 rt = node.right;
