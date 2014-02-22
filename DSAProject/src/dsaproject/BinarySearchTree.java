@@ -1,5 +1,7 @@
 package dsaproject;
 
+import java.util.HashMap;
+
 public class BinarySearchTree {
 
     protected Node root = null, current = null;   // Spare reference for processing
@@ -7,6 +9,7 @@ public class BinarySearchTree {
     private Node free = null;        // nodes for re-use
     protected static final boolean DEBUG = false;
     protected static final boolean UNIQUE = false;
+    protected HashMap<Integer, Book> bookMap = new HashMap<>();
 
     /*
      * Insertion in the BST
@@ -46,9 +49,7 @@ public class BinarySearchTree {
         }
         inOrder(item.left);                   // Process left sub-tree
         System.out.printf("%25s(%d)\n", item.data, item.height);
-        if (++nItems % 10 == 0) {
-            System.out.println();
-        }
+        
         inOrder(item.right);                  // Process right sub-tree
     }
     
@@ -103,6 +104,91 @@ public class BinarySearchTree {
         }
     } // end newHt()
 
+   public Book getBookByISBN(int ISBN){
+        inOrderBookMap(this.root);
+        Book get = bookMap.get(ISBN);
+        return find(get);
+    }
+//    ******************* Deletion *******************  ///
+// Fields required as stable in delete(BSTnode, int)
+    Node deleteNode, lastNode;
+
+    /*
+     * Delete the node with the value passed.
+     */
+    public void delete(Book value) {
+        deleteNode = null;
+        lastNode = null;
+        root = delete(root, value);
+    }
+
+// Interchange the .data fields on two BSTnodes passed
+    static void swapData(Node d, Node s) {
+        Book temp = d.data;
+        d.data = s.data;
+        s.data = temp;
+    }
+
+    Node delete(Node node, Book value) {
+        if (node == null) {
+            return null;
+        }
+
+        lastNode = node;                      // Reference to LAST node seen
+        if (value.compareTo(node.data) < 0) {
+            node.left = delete(node.left, value);
+        } else {//When we FIND the node and take one step right, all subsequent
+            //steps will be left --- down to the in-order successor
+            deleteNode = node;                 // Potentially the node to go
+            node.right = delete(node.right, value);
+        }
+
+        // In the returns, the call where we are dealing with the replacement
+        if (node == lastNode) {//Check to see if we indeed DID find the value
+            if (deleteNode != null && value.equals(deleteNode.data)) {//Final check:  if node is RIGHTMOST in its subtree
+                if (deleteNode == lastNode) // Half-nodes are easy!
+                {
+                    node = node.left;            // Return left subtree
+                } //node is NOT rightmost in its subtree.  Copy replacement up.
+                else {
+                    swapData(deleteNode, lastNode);
+                    node = node.right;           // Return right subtree
+                }
+                recycle(lastNode);             // Return the node for re-use
+            }
+        } else // Adjust heights on the way back up the recursive stack
+        {
+            node.height = newHight(node);
+            node.size = newSize(node);
+        }
+        return node;
+    }
+    public void inOrderBookMap(Node item) {
+        if (item == null) {
+            return;            // I.e., empty tree
+        }
+        inOrderBookMap(item.left);                   // Process left sub-tree
+        bookMap.put(item.data.getISBN(),item.data);
+        
+        inOrderBookMap(item.right);                  // Process right sub-tree
+    }
+    ////******************* Simple Find *******************////
+    /**
+     * Find the cell with the data field corresponding to Value
+     */
+    Book find(Book value) {
+        current = root;
+        while (current != null && !current.data.equals(value)) {
+            if (value.compareTo(current.data) < 0) {
+                current = current.left;
+            } else {
+                current = current.right;
+            }
+        }
+
+        return current == null ? null : current.data;
+    }
+    
 // Return the size based on the children; node must NOT be null.
     private static int newSize(Node node) {
         Node lt = node.left,
