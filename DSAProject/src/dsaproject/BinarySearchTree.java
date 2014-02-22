@@ -1,6 +1,5 @@
 package dsaproject;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.TreeSet;
 
@@ -12,6 +11,7 @@ public class BinarySearchTree {
     protected static final boolean DEBUG = false;
     protected static final boolean UNIQUE = false;
     protected HashMap<Integer, Book> bookMap = new HashMap<>();
+    protected TreeSet<Book>  bookarray =new TreeSet<>();
 
     /*
      * Insertion in the BST
@@ -50,7 +50,7 @@ public class BinarySearchTree {
             return;            // I.e., empty tree
         }
         inOrder(item.left);                   // Process left sub-tree
-        System.out.printf("%25s(%d)\n", item.data, item.height);
+        System.out.printf("%25s (%d)\n", item.data, item.height);
         
         inOrder(item.right);                  // Process right sub-tree
     }
@@ -173,8 +173,7 @@ public class BinarySearchTree {
             return;            // I.e., empty tree
         }
         inOrderBookMap(item.left);                   // Process left sub-tree
-        bookMap.put(item.data.getISBN(),item.data);
-        
+        bookMap.put(item.data.getISBN(),item.data);        
         inOrderBookMap(item.right);                  // Process right sub-tree
     }
     ////******************* Simple Find *******************////
@@ -193,7 +192,7 @@ public class BinarySearchTree {
 
         return current == null ? null : current.data;
     }
-    TreeSet<Book>  bookarray =new TreeSet<>();
+    
      public void inOrderBookList(Node item,String value) {
          
         if (item == null) {
