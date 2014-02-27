@@ -45,9 +45,9 @@ public class DSAProject {
         System.out.println("Select an Option");
         System.out.println("1) Print Book List");
         System.out.println("2) Enter a new Book ");
-        System.out.println("3) Search Book by Titel ");
+        System.out.println("3) Search Book by Title ");
         System.out.println("4) Search Book by ISBN ");
-        System.out.println("5) Delete Book by Titel");
+        System.out.println("5) Delete Book by Title");
         System.out.println("6) Delete Book by ISBN ");
         System.out.println("7) Show Books By Keyword ");
         System.out.println("0) Exit ");
@@ -154,11 +154,11 @@ public class DSAProject {
             enterNewBook(bookName);
         }
 
-        System.out.printf("%s %5s", "Enter Aouther First Name", ":");
+        System.out.printf("%s %5s", "Enter Author First Name", ":");
         Scanner sc = new Scanner(System.in); // Change 
         String fName = sc.nextLine(); //change
         //String fName = System.console().readLine();
-        System.out.printf("%s %5s", "Enter Aouther Last Name", ":");
+        System.out.printf("%s %5s", "Enter Author Last Name", ":");
         sc = new Scanner(System.in); // Change 
         String lName = sc.nextLine(); //change
         //String lName = System.console().readLine();
@@ -166,7 +166,7 @@ public class DSAProject {
         Book newBook = new Book(bookName, fName, lName, ISBN);
         bst.insert(newBook);
 
-        System.out.println(" Book " + bookName + "  Added to file");
+        System.out.println(" Book " + bookName + "  Added to The file Book List");
         writeBooKToFile(newBook);
     }
 
@@ -227,18 +227,18 @@ public class DSAProject {
     }
 
     static void ShowBooksByKeyword() {
-        System.out.printf("%s %5s", "Enter Seach Keyword", ":");
+        System.out.printf("%s %5s", "Enter Search Keyword", ":");
         String keyword = System.console().readLine();
         TreeSet<Book> ar = bst.getBookList(keyword);
         if (ar.size() > 0) {
-            System.out.println(ar.size() + " matchs found");
+            System.out.println(ar.size() + " matches found");
             printHeadder();
             for (Book book : ar) {
                 System.out.println(book);
             }
             System.out.println("\n");
         } else {
-            System.out.println("No matchs found !");
+            System.out.println("No any matches found !");
         }
 
         // need to implements 
