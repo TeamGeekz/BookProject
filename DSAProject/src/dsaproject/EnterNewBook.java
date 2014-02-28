@@ -11,8 +11,11 @@ import javax.swing.JOptionPane;
  * @author Isuru
  */
 public class EnterNewBook extends javax.swing.JPanel {
-
-    static BinarySearchTree bst;
+    /**
+     * Share this bst object all over the program thar will be only one may move this in to 
+     * MainJFrame file and and there you can populate with file   
+     */
+    public static BinarySearchTree bst = new BinarySearchTree() ;
     
     
     /**
@@ -135,7 +138,6 @@ public class EnterNewBook extends javax.swing.JPanel {
         bst.insert(newBook);
         
         JOptionPane.showMessageDialog(null, "Data is successfully saved");
-        
         
     }                                        
 
